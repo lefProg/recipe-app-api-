@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recipes',
     'rest_framework',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,21 @@ WSGI_APPLICATION = 'myrecipeapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE' : 'django.db.backends.postgresql',
+        'HOST' : os.environ.get('DB_HOST'),
+        'NAME' : os.environ.get('DB_NAME'),
+        'PORT' : os.environ.get('DB_PORT'),
+        'USER' : os.environ.get('DB_USER'),
+        'PASSWORD' : os.environ.get('DB_PASS'),
+
+        #'HOST' : 'localhost',
+        #'NAME' : 'postgres',
+        #'PORT' : '5432',
+        #'USER' : 'postgres',
+        #'PASSWORD' : 'admin',
+
+
+
     }
 }
 
@@ -122,3 +136,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'core.User'
